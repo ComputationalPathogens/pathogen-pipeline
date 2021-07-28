@@ -47,7 +47,7 @@ def load_data(dataloc):
     datapth = dataloc + '/processed_data/features.npy'
     labelpth = dataloc + '/processed_data/clean.csv'
     data = np.load(datapth, allow_pickle=True)
-    colnames = ['id', 'assembly', 'genus', 'species', 'seqfile']
+    colnames = ['id', 'assembly', 'genus', 'species', 'seqfile', 'cntfile']
     labels = pd.read_csv(labelpth, names=colnames)
     labels = labels.species.tolist()
     labels = np.asarray(labels)
@@ -138,7 +138,6 @@ def train_keras(k, data, label_encoded_y, labels_unencoded):
     final_labels = []
     final_hps = []
 
-
     stop_early = tf.keras.callbacks.EarlyStopping(monitor='val_loss', patience=6)
     fold = 0
     for train_index, test_index in kf.split(data, label_encoded_y):
@@ -148,8 +147,8 @@ def train_keras(k, data, label_encoded_y, labels_unencoded):
         max_epochs=10,
         factor=3,
         overwrite=True,
-        directory="/Users/koitere/nextflow2/refseq/hyp",
-        project_name="refseq",
+        directory="/Users/koitere/hyp",
+        project_name="BCP",
     )
         fold += 1
         Xtrain = data[train_index]
@@ -159,18 +158,18 @@ def train_keras(k, data, label_encoded_y, labels_unencoded):
         sk_obj = SelectKBest(f_classif, k=num_feats)
         Xtrain = sk_obj.fit_transform(Xtrain, Ytrain)
         Xtest = sk_obj.transform(Xtest)
-        tuner.search(Xtrain, Ytrain, epochs=20, validation_split=0.25,callbacks=[stop_early])
+        tuner.search(Xtrain, Ytrain, epochs=20, validation_split=0.25,callbacks=[stop_early], verbose=0)
         best_hps = tuner.get_best_hyperparameters(num_trials=1)[0]
         model = tuner.hypermodel.build(best_hps)
         final_hps.append(best_hps)
         final_features.append(Xtest)
         final_labels.append(Ytest)
 
-        history = model.fit(Xtrain, Ytrain, epochs=50, validation_split=0.25)
+        history = model.fit(Xtrain, Ytrain, epochs=50, validation_split=0.25, verbose = 0)
         val_acc_per_epoch = history.history['val_accuracy']
         best_epoch = val_acc_per_epoch.index(max(val_acc_per_epoch)) + 1
         hypermodel = tuner.hypermodel.build(best_hps)
-        hypermodel.fit(Xtrain, Ytrain, epochs=best_epoch, validation_split=0.25)
+        hypermodel.fit(Xtrain, Ytrain, epochs=best_epoch, validation_split=0.25, verbose = 0)
         final_models.append(hypermodel)
 
     return final_hps, final_models, final_features, final_labels
@@ -179,7 +178,7 @@ def test_keras(final_models, final_features, final_labels):
     highest_acc = 0
     best_model = []
     for model, Xtest, Ytest in zip(final_models, final_features, final_labels):
-        eval_result = model.evaluate(Xtest, Ytest)
+        eval_result = model.evaluate(Xtest, Ytest, verbose = 0)
         print("[test loss, test accuracy]:", eval_result)
         if eval_result[1] > highest_acc:
             highest_acc = eval_result[1]

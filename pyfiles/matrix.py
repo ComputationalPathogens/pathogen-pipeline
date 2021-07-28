@@ -28,6 +28,9 @@ def get_kmer_counts(filename, num_cols, col_index):
             kmercount = int(kmercount)
             seq = record.seq
             seq = str(seq)
+            if len(seq) < 11:
+                print("Invalid key: %s" % (seq))
+                print(filename)
             index = col_index[seq]
             genome_row[index] = kmercount
 

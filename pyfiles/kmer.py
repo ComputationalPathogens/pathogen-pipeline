@@ -7,19 +7,22 @@ def count_kmer(rootdir):
     dumpname = 'mer_counts_dumps.fa'
 
     colnames = ['id', 'assembly', 'genus', 'species', 'seqfile', 'cntfile']
-    data = pd.read_csv(filepath, dtype={'id':'int32','seqfile':'str'}, names=colnames)
+    data = pd.read_csv(filepath, names=colnames)
     id = 0
     data['seqfile'] = data['seqfile'].astype('str')
     data['cntfile'] = data['cntfile'].astype('str')
     files = data.seqfile.tolist()
     files2 = data.cntfile.tolist()
-    for file in files:
-        ext = os.path.splitext(str(file))
-        dirname = os.path.dirname(file)
+
+    for seqfile, cntfile in zip(files, files2):
+        ext = os.path.splitext(str(seqfile))
+        dirname = os.path.dirname(seqfile)
         if ext[-1] == ".fna":
             merpth = dirname + '/' + 'mer_counts.jf'
-            cmd = 'jellyfish count -m 11 -s 100M -C -o ' + merpth + ' ' + file
             dumppth = dirname + '/' + dumpname
+            if cntfile == dumppth:
+                continue
+            cmd = 'jellyfish count -m 11 -s 100M -C -o ' + merpth + ' ' + file
             cmd2 = 'jellyfish dump ' + merpth + ' > ' + dumppth
             os.system(cmd)
             os.system(cmd2)
