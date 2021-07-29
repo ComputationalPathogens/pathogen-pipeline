@@ -11,7 +11,16 @@ from sklearn.feature_selection import SelectKBest, f_classif
 from sklearn.metrics import precision_recall_fscore_support
 
 def model_eval(predict, label):
-    #from acheron
+    """
+    Parameters
+    ----------
+    predict : Predictions made by model as a list
+    label : Correct labels corresponding to predictions as a list
+    Returns
+    -------
+    accuracy : Accuracy of model with supplied predictions
+
+    """
     accuracy = np.sum([predict[i]==label[i] for i in range(len(predict))])/len(predict)
 
     return accuracy
@@ -33,6 +42,18 @@ def load_models(modelnums):
     return models, features, labels
 
 def load_data(dataloc):
+    """
+    Parameters
+    ----------
+    dataloc : Base directory of nextflow execution
+
+    Returns
+    -------
+    data : Feature matrix of [NumSamples]*[NumFeatures] shape
+    labels_encoded : Labels corresponding to feature matrix [Numsamples] length
+    label_encoder.classes_ : the unencoded classes the model is being trained on
+    
+    """
     datapth = dataloc + '/processed_data/features.npy'
     labelpth = dataloc + '/processed_data/clean.csv'
     data = np.load(datapth, allow_pickle=True)

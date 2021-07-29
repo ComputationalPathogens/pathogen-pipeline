@@ -2,6 +2,21 @@ import os
 import pandas as pd
 
 def count_kmer(rootdir):
+    """
+    Parameters
+    ----------
+    rootdir : Base directory of nextflow execution
+
+    Returns
+    -------
+    rootdir : Base directory of nextflow execution
+    
+    Desc
+    ----
+    Takes .fna complete genome sequence files and runs Jellyfish to count kmers
+    Saves kmer-count file path into the clean.csv metadata file
+
+    """
     filepath = rootdir + '/processed_data/clean.csv'
     dumpname = 'mer_counts_dumps.fa'
 

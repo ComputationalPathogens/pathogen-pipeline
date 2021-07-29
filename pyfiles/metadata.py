@@ -6,6 +6,22 @@ from collections import Counter
 
 
 def build_metadata(datadir):
+
+    """
+    Parameters
+    ----------
+    datadir : Base directory of nextflow execution
+
+    Returns
+    -------
+    datadir : Base directory of nextflow execution
+    
+    Disc
+    ----
+    Generates a .csv to record the Assembly#, Genus, Species and file paths
+    for complete genome sequences/kmer counts
+
+    """
     filename = datadir + '/processed_data/metadata.csv'
     datapth = datadir + '/refseq/bacteria/'
     f = open(filename, 'w', newline='')
@@ -60,8 +76,22 @@ def build_metadata(datadir):
 
 def clean_outliers(k, datadir):
     """
-    k - the amount of folds for cross fold validation, will remove any classes
-    with less than k occurences for stratified k-fold
+    Parameters
+    ----------
+    k : The amount of folds for k-fold validation, will remove any classes with
+    less than k occurences so stratified k-fold can be used
+    
+    datadir : Base directory of nextflow execution
+
+    Returns
+    -------
+    datadir : Base directory of nextflow execution
+    
+    Disc
+    ----
+    'Cleans' data by removing any samples with less than k occurences so data
+    can be used in stratified k-fold
+
     """
     k = int(k)
     colnames = ['id', 'assembly', 'genus', 'species', 'seqfile', 'cntfile']
