@@ -3,7 +3,6 @@ import pandas as pd
 
 def count_kmer(rootdir):
     filepath = rootdir + '/processed_data/clean.csv'
-    walkdir = rootdir + '/refseq/bacteria/'
     dumpname = 'mer_counts_dumps.fa'
 
     colnames = ['id', 'assembly', 'genus', 'species', 'seqfile', 'cntfile']
@@ -22,7 +21,7 @@ def count_kmer(rootdir):
             dumppth = dirname + '/' + dumpname
             if cntfile == dumppth:
                 continue
-            cmd = 'jellyfish count -m 11 -s 100M -C -o ' + merpth + ' ' + file
+            cmd = 'jellyfish count -m 11 -s 100M -C -o ' + merpth + ' ' + seqfile
             cmd2 = 'jellyfish dump ' + merpth + ' > ' + dumppth
             os.system(cmd)
             os.system(cmd2)

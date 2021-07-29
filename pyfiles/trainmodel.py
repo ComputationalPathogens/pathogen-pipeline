@@ -1,25 +1,14 @@
 import xgboost as xgb
-import itertools
-import os
-import csv
-import sys
-import Bio
 import pandas as pd
-from pandas import DataFrame
-from Bio import Seq, SeqIO
 import numpy as np
 from tensorflow import keras
 from keras.layers import Dense, Dropout
-from keras.models import Sequential
-from keras_tuner import RandomSearch, Hyperband
-import keras_tuner as kt
+from keras_tuner import Hyperband
 import tensorflow as tf
-from collections import Counter
 from sklearn.model_selection import StratifiedKFold
 from sklearn.preprocessing import LabelEncoder
 from sklearn.feature_selection import SelectKBest, f_classif
 from sklearn.metrics import precision_recall_fscore_support
-from numpy import save, savetxt, load, loadtxt
 
 def model_eval(predict, label):
     #from acheron
@@ -101,7 +90,6 @@ def test_model(final_models, final_features, final_labels, labels_unencoded, dat
         count+=1
         xgb_test_matrix = xgb.DMatrix(xtest)
         prediction = model.predict(xgb_test_matrix)
-        score = model_eval(prediction, ytest)
         prec_recall = precision_recall_fscore_support(ytest, prediction, average=None)
         prec_recall = np.transpose(prec_recall)
         prec_recall = pd.DataFrame(data=prec_recall, index=labels_unencoded, columns=['Precision','Recall','F-Score','Supports'])
@@ -185,28 +173,3 @@ def test_keras(final_models, final_features, final_labels):
             best_model = model
 
     return best_model
-
-
-
-#params = {'objective':'multi:softmax', 'num_class': '14', 'max_depth': '6', 'tree_method': 'hist'}
-
-#models_loaded = True
-
-#final_models = []
-#final_features = []
-#final_labels = []
-#data, label_encoded_y, labels_unencoded = load_data(data_path,labels_path)
-#inal_hps, final_models, final_features, final_labels = train_keras(5, data, label_encoded_y, labels_unencoded)
-#test_keras(final_models, final_features, final_labels)
-
-"""
-if models_loaded == True:
-    model_nums = [1,2,3,4,5]
-    final_models, final_features, final_labels = load_models(model_nums)
-    _,__,labels_unencoded = load_data(data_path,labels_path)
-else:
-    data,label_encoded_y, labels_unencoded = load_data(data_path, labels_path)
-    final_models, final_features, final_labels = train_model(5, data, label_encoded_y, params, labels_unencoded, True)
-
-test_model(final_models, final_features, final_labels, labels_unencoded)
-"""

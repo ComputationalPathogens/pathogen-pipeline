@@ -1,11 +1,8 @@
 import itertools
-import os
-import csv
-import Bio
 import pandas as pd
 from Bio import Seq, SeqIO
 import numpy as np
-from numpy import save, savetxt, load, loadtxt
+from numpy import save
 from concurrent.futures import ProcessPoolExecutor
 
 def get_file_names(filepth):
@@ -20,7 +17,6 @@ def get_kmer_counts(filename, num_cols, col_index):
 
     genome_row = num_cols*[0]
 
-    id = 0
     #Same method as used in acheron, nothing else tried was fast enough
     with open(filename) as f:
         for record in SeqIO.parse(f, 'fasta'):

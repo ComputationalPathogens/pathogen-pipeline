@@ -1,8 +1,5 @@
 import csv
-import re
 import numpy as np
-from sklearn.preprocessing import LabelEncoder
-from numpy import save, savetxt, load, loadtxt
 import pandas as pd
 import os
 from collections import Counter
@@ -73,17 +70,10 @@ def clean_outliers(k, datadir):
     species = data2.species.tolist()
     labels = np.asarray(species)
     count = Counter(labels)
-    #datamask = []
     for index, row in data2.iterrows():
         if count[row['species']] < k:
-            #datamask.append(index)
             data2.drop(index, axis=0, inplace=True)
 
-    #diff = np.arange(846)
-    #datamask = np.setdiff1d(diff,datamask)
-    #data = data[datamask]
-    #savename = datadir + '/processed_data/dataclean.npy'
-    #save(savename, data)
     cleanpth = datadir + '/processed_data/clean.csv'
     data2.to_csv(cleanpth, index=False, header=False)
     return datadir
