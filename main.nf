@@ -1,8 +1,6 @@
 #!/usr/bin/env nextflow
 
 params.download = true
-params.features = true
-params.start = 3
 params.model = "xgb"
 params.k = 5
 params.datadir = "$baseDir"
@@ -21,12 +19,8 @@ workflow {
 	} else {
 		METADATA(params.k, params.datadir)
 	}
-	if(params.features == true) {
-		FEATURES(METADATA.out) 
-		TRAIN(params.k, FEATURES.out, params.model)
-	} else {
-		TRAIN(params.k, METADATA.out, params.model)
-	}
+	FEATURES(METADATA.out) 
+	TRAIN(params.k, FEATURES.out, params.model)
 }
 
 workflow.onComplete {

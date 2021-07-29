@@ -3,7 +3,8 @@
 
 process TRAINKERAS {
 	echo true
-
+	cache false
+	
 	input:
 	  val(k)
 	  val(datapth)

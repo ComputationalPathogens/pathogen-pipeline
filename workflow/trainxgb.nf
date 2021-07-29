@@ -1,5 +1,6 @@
 
 process TRAINXGB {
+    cache false
 	echo true
 	input:
 	  val(k)
