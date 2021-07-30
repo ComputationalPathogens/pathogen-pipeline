@@ -10,7 +10,7 @@ process PROCESSFILES {
 
 	script:
 	"""
-	#!/usr/bin/env python
+	#!python3
 	import sys
 	import os
 	sys.path.append("$baseDir/pyfiles/")

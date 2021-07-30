@@ -43,7 +43,7 @@ def build_metadata(datadir):
             if ext == ".gz":
                 filename = os.path.splitext(file)[0]
                 fastapth = subdir + '/' + filename
-                pth = subdir + '/' + filename + '.fna'
+                pth = subdir + '/' + filename
                 cmd = 'gunzip ' + fastapth
                 os.system(cmd)
             if ext == ".txt":

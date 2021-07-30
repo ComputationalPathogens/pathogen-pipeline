@@ -9,7 +9,7 @@ process KMERCOUNT {
 
 	script:
 	"""
-	#!/usr/bin/env python
+	#!python3
 	import sys
 	sys.path.append("$baseDir/pyfiles/")
 	import kmer

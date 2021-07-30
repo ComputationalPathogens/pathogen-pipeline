@@ -2,7 +2,7 @@ import xgboost as xgb
 import pandas as pd
 import numpy as np
 from tensorflow import keras
-from keras.layers import Dense, Dropout
+from tensorflow.keras.layers import Dense, Dropout
 from keras_tuner import Hyperband
 import tensorflow as tf
 from sklearn.model_selection import StratifiedKFold
@@ -156,7 +156,7 @@ def train_keras(k, data, label_encoded_y, labels_unencoded):
         max_epochs=10,
         factor=3,
         overwrite=True,
-        directory="/Users/koitere/hyp",
+        directory="/home/liam/pathogen-pipeline/hyp",
         project_name="BCP",
     )
         fold += 1
