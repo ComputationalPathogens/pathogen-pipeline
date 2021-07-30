@@ -6,6 +6,9 @@ process TRAINXGB {
 	  val(k)
 	  val(datapth)
 
+    output:
+      stdout emit: xgbout
+      
 	script:
 	"""
 	#!python3
@@ -15,5 +18,6 @@ process TRAINXGB {
 	data,label_encoded_y, labels_unencoded = trainmodel.load_data("$datapth")
 	final_models, final_features, final_labels = trainmodel.train_model($k, data, label_encoded_y, labels_unencoded, True, "$datapth")
 	trainmodel.test_model(final_models, final_features, final_labels, labels_unencoded, "$datapth")
+	print("XGB Testing Complete")
 	"""
 }

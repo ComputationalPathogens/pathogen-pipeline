@@ -8,6 +8,9 @@ process TRAINKERAS {
 	input:
 	  val(k)
 	  val(datapth)
+	  
+    output:
+      stdout emit: kerasout
 
 	script:
 	"""
@@ -20,6 +23,6 @@ process TRAINKERAS {
 	data, label_encoded_y, labels_unencoded = tm.load_data("$datapth")
 	final_hps, final_models, final_features, final_labels = tm.train_keras($k, data, label_encoded_y, labels_unencoded)
 	tm.test_keras(final_models, final_features, final_labels)
-
+	print("Keras Training Complete")
 	"""
 }

@@ -11,7 +11,13 @@ workflow TRAIN {
 	main:
 		if(model == 'xgb') {
 			TRAINXGB(k, datapth)
+			finalmsg = TRAINXGB.out
 		} else {
 			TRAINKERAS(k, datapth)
+			finalmsg = TRAINKERAS.out
 		}
+		
+    emit:
+        finalmsg
+		
 }
