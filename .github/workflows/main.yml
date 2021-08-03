@@ -52,6 +52,7 @@ jobs:
        ls 
        if [ -f "${SINGULARITY_RECIPE}" ]; then
             sudo -E singularity build ${OUTPUT_CONTAINER} ${SINGULARITY_RECIPE}
+            singularity exec container.sif pytest
        else
            echo "${SINGULARITY_RECIPE} is not found."
            echo "Present working directory: $PWD"
