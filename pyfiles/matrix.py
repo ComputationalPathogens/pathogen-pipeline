@@ -74,7 +74,7 @@ def build_matrix(datadir):
     cols = {}
     rows = {}
     chars = "ACGT"
-    files_path = datadir + '/processed_data/clean.csv'
+    files_path = datadir + '/processed_data/cleanwcounts.csv'
     i = 0
     files = get_file_names(files_path)
 

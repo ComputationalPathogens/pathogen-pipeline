@@ -13,8 +13,9 @@ From: ubuntu:20.04
 	python3 --version
 	apt -y install python3-pip
 	pip3 install --upgrade setuptools
-	pip3 install numpy pandas biopython matplotlib scipy seaborn scikit-learn xgboost tensorflow keras keras_tuner ncbi-genome-download
-
+	pip3 install pandas biopython matplotlib scipy seaborn scikit-learn xgboost tensorflow keras keras_tuner ncbi-genome-download pytest
+	pip3 install 'numpy==1.19.2' --force-reinstall
+	
 %test
     grep -q NAME=\"Ubuntu\" /etc/os-release
     if [ $? -eq 0 ]; then

@@ -31,15 +31,12 @@ def build_metadata(datadir):
     for subdir, dirs, files in os.walk(datapth):
         dirs.sort()
         files.sort()
-        pth, assembly, organism, genus, species, cnt = '', '', '', '', '', ''
+        pth, assembly, organism, genus, species, cnt = 'empty', 'empty', 'empty', 'empty', 'empty', 'empty'
         for file in files:
             ext = os.path.splitext(file)[-1].lower()
             if ext == ".fna":
                 filename = os.path.splitext(file)[0]
                 pth = subdir + '/' + filename + '.fna'
-            if ext == ".fa":
-                filename = os.path.splitext(file)[0]
-                cnt = subdir + '/' + filename + '.fa'
             if ext == ".gz":
                 filename = os.path.splitext(file)[0]
                 fastapth = subdir + '/' + filename

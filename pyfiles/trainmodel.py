@@ -4,7 +4,7 @@ import numpy as np
 from tensorflow import keras
 from tensorflow.keras.layers import Dense, Dropout
 from keras_tuner import Hyperband
-import tensorflow as tf
+#import tensorflow as tf
 from sklearn.model_selection import StratifiedKFold
 from sklearn.preprocessing import LabelEncoder
 from sklearn.feature_selection import SelectKBest, f_classif
@@ -55,7 +55,7 @@ def load_data(dataloc):
     
     """
     datapth = dataloc + '/processed_data/features.npy'
-    labelpth = dataloc + '/processed_data/clean.csv'
+    labelpth = dataloc + '/processed_data/cleanwcounts.csv'
     data = np.load(datapth, allow_pickle=True)
     colnames = ['id', 'assembly', 'genus', 'species', 'seqfile', 'cntfile']
     labels = pd.read_csv(labelpth, names=colnames)
@@ -147,7 +147,7 @@ def train_keras(k, data, label_encoded_y, labels_unencoded):
     final_labels = []
     final_hps = []
 
-    stop_early = tf.keras.callbacks.EarlyStopping(monitor='val_loss', patience=6)
+    stop_early = keras.callbacks.EarlyStopping(monitor='val_loss', patience=6)
     fold = 0
     for train_index, test_index in kf.split(data, label_encoded_y):
         tuner = Hyperband(

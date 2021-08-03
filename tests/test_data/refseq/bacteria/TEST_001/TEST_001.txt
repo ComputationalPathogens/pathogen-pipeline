@@ -1,0 +1,2 @@
+# Assembly name:  ASM001v1
+# Organism name:  Brucella testone bv. 1 str. 16M (a-proteobacteria)

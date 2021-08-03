@@ -11,8 +11,10 @@ include { METADATA } from './workflow/metadata'
 include { FEATURES } from './workflow/features'
 include { TRAIN } from './workflow/train'
 include { DOWNLOAD } from './workflow/download'
+include { TESTS } from './workflow/tests'
 
 workflow {
+    TESTS(params.datadir)
 	if(params.download == true) {
 		DOWNLOAD(params.datadir)
 		METADATA(params.k, DOWNLOAD.out)

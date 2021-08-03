@@ -17,10 +17,16 @@ def count_kmer(rootdir):
     Saves kmer-count file path into the clean.csv metadata file
 
     """
+    #Could potentially be done with multiprocessing instead although this doesnt take much time anyway
     filepath = rootdir + '/processed_data/clean.csv'
-    dumpname = 'mer_counts_dumps.fa'
-
+    checkpath = rootdir + '/processed_data/cleanwcounts.csv'
     colnames = ['id', 'assembly', 'genus', 'species', 'seqfile', 'cntfile']
+    dumpname = 'mer_counts_dumps.fa'
+    check = pd.read_csv(checkpath, names=colnames)
+    if len(check.index) != 0:
+        return rootdir
+
+
     data = pd.read_csv(filepath, names=colnames)
     id = 0
     data['seqfile'] = data['seqfile'].astype('str')
@@ -46,8 +52,7 @@ def count_kmer(rootdir):
             dumppth = "error"
             data.at[id,'cntfile'] = dumppth
             id = id + 1
-
-
+    filepath = rootdir + '/processed_data/cleanwcounts.csv'
     data.to_csv(filepath, index=False, header=False)
 
     return rootdir

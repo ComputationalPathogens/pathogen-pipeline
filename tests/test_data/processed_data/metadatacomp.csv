@@ -1,0 +1,12 @@
+0,"ASM001v1
+",Brucella,testone,/home/liam/pathogen-pipeline/tests/test_data/refseq/bacteria/TEST_001/TEST_001.fna,empty
+1,"ASM002v1
+",Brucella,testtwo,/home/liam/pathogen-pipeline/tests/test_data/refseq/bacteria/TEST_002/TEST_002.fna,empty
+2,"ASM003v1
+",Brucella,testtwo,/home/liam/pathogen-pipeline/tests/test_data/refseq/bacteria/TEST_003/TEST_003.fna,empty
+3,"ASM004v1
+",Brucella,testthree,/home/liam/pathogen-pipeline/tests/test_data/refseq/bacteria/TEST_004/TEST_004.fna,empty
+4,"ASM005v1
+",Brucella,testone,/home/liam/pathogen-pipeline/tests/test_data/refseq/bacteria/TEST_005/TEST_005.fna,empty
+5,"ASM006v1
+",Brucella,testone,/home/liam/pathogen-pipeline/tests/test_data/refseq/bacteria/TEST_006/TEST_006.fna,empty

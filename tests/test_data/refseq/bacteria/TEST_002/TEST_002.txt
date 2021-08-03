@@ -1,0 +1,2 @@
+# Assembly name:  ASM002v1
+# Organism name:  Brucella testtwo bv. 1 str. 16M (a-proteobacteria)
