@@ -16,4 +16,3 @@ def test_matrix():
     check = data == comp
     assert check.all()
         
-
