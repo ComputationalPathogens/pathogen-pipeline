@@ -36,11 +36,12 @@ def build_metadata(datadir, filename = '/processed_data/metadata.csv'):
             ext = os.path.splitext(file)[-1].lower()
             if ext == ".fna":
                 name = os.path.splitext(file)[0]
-                pth = '/refseq/bacteria/' + name + '.fna'
+                pth = '/refseq/bacteria/' + name + '/' + name + '.fna'
             if ext == ".gz":
                 name = os.path.splitext(file)[0]
+                name = os.path.splitext(name)[0]
                 fastapth = subdir + '/' + name
-                pth = '/refseq/bacteria/' + name
+                pth = '/refseq/bacteria/' + name + '/' + name + '.fna'
                 cmd = 'gunzip ' + fastapth
                 os.system(cmd)
             if ext == ".txt":
