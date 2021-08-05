@@ -54,5 +54,3 @@ def count_kmer(rootdir, filename = '/processed_data/clean.csv'):
     data.to_csv(filepath, index=False, header=False)
 
     return rootdir
-
-
