@@ -41,7 +41,7 @@ def load_models(modelnums):
 
     return models, features, labels
 
-def load_data(dataloc):
+def load_data(dataloc, filenamenp = '/processed_data/features.npy', filenamecsv = '/processed_data/cleanwcounts.csv'):
     """
     Parameters
     ----------
@@ -54,8 +54,8 @@ def load_data(dataloc):
     label_encoder.classes_ : the unencoded classes the model is being trained on
     
     """
-    datapth = dataloc + '/processed_data/features.npy'
-    labelpth = dataloc + '/processed_data/cleanwcounts.csv'
+    datapth = dataloc + filenamenp
+    labelpth = dataloc + filenamecsv
     data = np.load(datapth, allow_pickle=True)
     colnames = ['id', 'assembly', 'genus', 'species', 'seqfile', 'cntfile']
     labels = pd.read_csv(labelpth, names=colnames)

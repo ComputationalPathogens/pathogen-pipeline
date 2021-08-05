@@ -5,7 +5,7 @@ import os
 from collections import Counter
 
 
-def build_metadata(datadir):
+def build_metadata(datadir, filename = '/processed_data/metadata.csv'):
 
     """
     Parameters
@@ -22,9 +22,9 @@ def build_metadata(datadir):
     for complete genome sequences/kmer counts
 
     """
-    filename = datadir + '/processed_data/metadata.csv'
+    filepth = datadir + filename
     datapth = datadir + '/refseq/bacteria/'
-    f = open(filename, 'w', newline='')
+    f = open(filepth, 'w', newline='')
     writer = csv.writer(f)
     id = -1
     #change over to use pandas write_csv
@@ -35,12 +35,12 @@ def build_metadata(datadir):
         for file in files:
             ext = os.path.splitext(file)[-1].lower()
             if ext == ".fna":
-                filename = os.path.splitext(file)[0]
-                pth = subdir + '/' + filename + '.fna'
+                name = os.path.splitext(file)[0]
+                pth = '/refseq/bacteria/' + name + '.fna'
             if ext == ".gz":
-                filename = os.path.splitext(file)[0]
-                fastapth = subdir + '/' + filename
-                pth = subdir + '/' + filename
+                name = os.path.splitext(file)[0]
+                fastapth = subdir + '/' + name
+                pth = '/refseq/bacteria/' + name
                 cmd = 'gunzip ' + fastapth
                 os.system(cmd)
             if ext == ".txt":
@@ -71,7 +71,7 @@ def build_metadata(datadir):
 
     return datadir
 
-def clean_outliers(k, datadir):
+def clean_outliers(k, datadir, filename = '/processed_data/metadata.csv'):
     """
     Parameters
     ----------
@@ -92,7 +92,7 @@ def clean_outliers(k, datadir):
     """
     k = int(k)
     colnames = ['id', 'assembly', 'genus', 'species', 'seqfile', 'cntfile']
-    csvpth = datadir + '/processed_data/metadata.csv'
+    csvpth = datadir + filename
     data2 = pd.read_csv(csvpth, names=colnames)
     species = data2.species.tolist()
     labels = np.asarray(species)

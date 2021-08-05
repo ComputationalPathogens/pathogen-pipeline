@@ -10,7 +10,7 @@ def test_matrix():
     cmppth = datadir + '/processed_data/featurescomp.npy'
     
     #if __name__ == '__main__':
-    m.build_matrix(datadir)
+    m.build_matrix(datadir, filename = '/processed_data/cleanwcountscomp.csv')
     data = np.load(filepth)
     comp = np.load(cmppth)
     check = data == comp

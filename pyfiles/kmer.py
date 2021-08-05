@@ -1,7 +1,7 @@
 import os
 import pandas as pd
 
-def count_kmer(rootdir):
+def count_kmer(rootdir, filename = '/processed_data/clean.csv'):
     """
     Parameters
     ----------
@@ -18,12 +18,12 @@ def count_kmer(rootdir):
 
     """
     #Could potentially be done with multiprocessing instead although this doesnt take much time anyway
-    filepath = rootdir + '/processed_data/clean.csv'
+    filepath = rootdir + filename
     checkpath = rootdir + '/processed_data/cleanwcounts.csv'
     colnames = ['id', 'assembly', 'genus', 'species', 'seqfile', 'cntfile']
     dumpname = 'mer_counts_dumps.fa'
     check = pd.read_csv(checkpath, names=colnames)
-    if len(check.index) != 0:
+    if check[0].cntfile != 0:
         return rootdir
 
 
@@ -38,19 +38,20 @@ def count_kmer(rootdir):
         ext = os.path.splitext(str(seqfile))
         dirname = os.path.dirname(seqfile)
         if ext[-1] == ".fna":
-            merpth = dirname + '/' + 'mer_counts.jf'
-            dumppth = dirname + '/' + dumpname
+            merpth = rootdir + dirname + '/' + 'mer_counts.jf'
+            dumppth = rootdir + dirname + '/' + dumpname
+            cntname = dirname + '/' + dumpname
             if cntfile == dumppth:
                 continue
             cmd = 'jellyfish count -m 11 -s 100M -C -o ' + merpth + ' ' + seqfile
             cmd2 = 'jellyfish dump ' + merpth + ' > ' + dumppth
             os.system(cmd)
             os.system(cmd2)
-            data.at[id,'cntfile'] = dumppth
+            data.at[id,'cntfile'] = cntname
             id = id + 1
         else:
             dumppth = "error"
-            data.at[id,'cntfile'] = dumppth
+            data.at[id,'cntfile'] = cntname
             id = id + 1
     filepath = rootdir + '/processed_data/cleanwcounts.csv'
     data.to_csv(filepath, index=False, header=False)

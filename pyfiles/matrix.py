@@ -23,7 +23,7 @@ def get_file_names(filepth):
     return files
 
 
-def get_kmer_counts(filename, num_cols, col_index):
+def get_kmer_counts(filename, num_cols, col_index, datadir):
     """
     Parameters
     ----------
@@ -38,9 +38,9 @@ def get_kmer_counts(filename, num_cols, col_index):
     """
 
     genome_row = num_cols*[0]
-
+    append = datadir + filename
     #Same method used in Computational-pathogens/acheron
-    with open(filename) as f:
+    with open(append) as f:
         for record in SeqIO.parse(f, 'fasta'):
             kmercount = record.id
             kmercount = int(kmercount)
@@ -55,7 +55,7 @@ def get_kmer_counts(filename, num_cols, col_index):
 
     return genome_row
 
-def build_matrix(datadir):
+def build_matrix(datadir, filename = '/processed_data/cleanwcounts.csv'):
     """
     Parameters
     ----------
@@ -74,7 +74,7 @@ def build_matrix(datadir):
     cols = {}
     rows = {}
     chars = "ACGT"
-    files_path = datadir + '/processed_data/cleanwcounts.csv'
+    files_path = datadir + filename
     i = 0
     files = get_file_names(files_path)
 
@@ -94,7 +94,7 @@ def build_matrix(datadir):
     kmer_matrix = np.zeros((numrows,numcols), dtype=np.ubyte)
     rowindex = 0
     with ProcessPoolExecutor(max_workers=None) as ppe:
-        for row in ppe.map(get_kmer_counts, files, itertools.repeat(numcols), itertools.repeat(cols)):
+        for row in ppe.map(get_kmer_counts, files, itertools.repeat(numcols), itertools.repeat(cols), itertools.repeat(datadir)):
             rows[rowindex] = rowindex
             kmer_matrix[rowindex,:] = row
             rowindex += 1
