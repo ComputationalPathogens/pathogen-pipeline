@@ -36,10 +36,11 @@ def count_kmer(rootdir, filename = '/processed_data/clean.csv'):
         if ext[-1] == ".fna":
             merpth = rootdir + dirname + '/' + 'mer_counts.jf'
             dumppth = rootdir + dirname + '/' + dumpname
+            seqpth = rootdir + seqfile
             cntname = dirname + '/' + dumpname
             if cntfile == cntname:
                 continue
-            cmd = 'jellyfish count -m 11 -s 100M -C -o ' + merpth + ' ' + seqfile
+            cmd = 'jellyfish count -m 11 -s 100M -C -o ' + merpth + ' ' + seqpth
             cmd2 = 'jellyfish dump ' + merpth + ' > ' + dumppth
             os.system(cmd)
             os.system(cmd2)
