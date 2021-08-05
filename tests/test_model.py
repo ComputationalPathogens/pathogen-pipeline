@@ -15,7 +15,7 @@ def test_modeleval():
     
 def test_loaddata():
     comppth = datadir + '/processed_data/featurescomp.npy'
-    data, labels_enc, label_classes = tm.load_data(datadir, filenamenp = '/processed_data/featurescomp.np', filenamecsv = '/processed_data/cleanwcountscomp.csv')
+    data, labels_enc, label_classes = tm.load_data(datadir, filenamenp = '/processed_data/featurescomp.npy', filenamecsv = '/processed_data/cleanwcountscomp.csv')
     
     comp = np.load(comppth)
     check = data == comp

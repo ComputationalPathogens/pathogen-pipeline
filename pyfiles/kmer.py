@@ -22,10 +22,6 @@ def count_kmer(rootdir, filename = '/processed_data/clean.csv'):
     checkpath = rootdir + '/processed_data/cleanwcounts.csv'
     colnames = ['id', 'assembly', 'genus', 'species', 'seqfile', 'cntfile']
     dumpname = 'mer_counts_dumps.fa'
-    check = pd.read_csv(checkpath, names=colnames)
-    if check[0].cntfile != 0:
-        return rootdir
-
 
     data = pd.read_csv(filepath, names=colnames)
     id = 0
@@ -41,7 +37,7 @@ def count_kmer(rootdir, filename = '/processed_data/clean.csv'):
             merpth = rootdir + dirname + '/' + 'mer_counts.jf'
             dumppth = rootdir + dirname + '/' + dumpname
             cntname = dirname + '/' + dumpname
-            if cntfile == dumppth:
+            if cntfile == cntname:
                 continue
             cmd = 'jellyfish count -m 11 -s 100M -C -o ' + merpth + ' ' + seqfile
             cmd2 = 'jellyfish dump ' + merpth + ' > ' + dumppth
