@@ -57,3 +57,10 @@ jobs:
            echo "Present working directory: $PWD"
            ls
        fi
+    - name: Test Pyfiles
+      run: |
+        ls -la
+        pwd
+        chmod -R a+r+w+x $(pwd)/tests
+        ls -la
+        singularity exec container.sif pytest
