@@ -47,27 +47,19 @@ def build_metadata(datadir, filename = '/processed_data/metadata.csv'):
                 cmd = 'gunzip ' + fastapth
                 os.system(cmd)
             if ext == ".txt":
+                #works if all assembly reports follow same format
                 fp = subdir + '/' + file
                 with open(fp, 'r') as f:
                     lines = f.readlines()
-                count = 0
-                for line in lines:
-                    #change to lines[0] and lines[1] directly grabbing?
-                    count += 1
-                    if count == 1:
-                        assembly = line
-                        assembly = assembly[18:]
-                    if count == 2:
-                        #safer way of parsing this text later?
-                        organism = line
-                        organism = organism[18:]
-                        species = organism.split(" ")
-                        genus = species[0]
-                        species = species[1]
-                        if species == 'sp.':
-                            species = "unknown"
-                    if count == 3:
-                        break
+                assembly = lines[0]
+                assembly = assembly[18:]
+                organism = lines[1]
+                organism = organism[18:]
+                species = organism.split(" ")
+                genus = species[0]
+                species = species[1]
+                if species == 'sp.':
+                    species = "unknown"
         if id > -1:
             writer.writerow([id, assembly, genus, species, pth, cnt])
         id += 1
