@@ -14,8 +14,5 @@ def test_matrix():
     data = np.load(filepth)
     comp = np.load(cmppth)
     check = data == comp
-    print(data.shape)
-    print(comp.shape)
     assert check.all()
         
-
