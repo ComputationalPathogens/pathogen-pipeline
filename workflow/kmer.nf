@@ -3,6 +3,7 @@ process KMERCOUNT {
 	echo true
 	input:
 	  val(datadir)
+	  val(ksize)
 
 	output:
 	  stdout emit: dumpname
@@ -14,7 +15,7 @@ process KMERCOUNT {
 	sys.path.append("$baseDir/pyfiles/")
 	import kmer
 
-	out = kmer.count_kmer("$datadir")
+	out = kmer.count_kmer("$datadir", $ksize)
 	print(out, end = '')
 	"""
 }

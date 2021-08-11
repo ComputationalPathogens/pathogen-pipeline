@@ -2,6 +2,7 @@ import csv
 import numpy as np
 import pandas as pd
 import os
+import re
 from collections import Counter
 
 
@@ -29,6 +30,8 @@ def build_metadata(datadir, filename = '/processed_data/metadata.csv'):
     id = -1
     #change over to use pandas write_csv
     for subdir, dirs, files in os.walk(datapth):
+        if re.search("mers", str(subdir)):
+            continue
         dirs.sort()
         files.sort()
         pth, assembly, organism, genus, species, cnt = 'empty', 'empty', 'empty', 'empty', 'empty', 'empty'

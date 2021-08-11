@@ -6,9 +6,10 @@ include { BUILDMATRIX } from './buildmatrix'
 workflow FEATURES {
 	take:
 	  datadir
-
+	  ksize
+	  
 	main:
-	  KMERCOUNT(datadir)
+	  KMERCOUNT(datadir, ksize)
 	  BUILDMATRIX(KMERCOUNT.out)
 
 	emit:

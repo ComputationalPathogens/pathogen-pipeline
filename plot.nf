@@ -3,6 +3,7 @@
 params.download = true
 params.model = "xgb"
 params.k = 5
+params.ksize = 11
 params.datadir = "$baseDir"
 
 nextflow.enable.dsl = 2
@@ -12,17 +13,18 @@ include { FEATURES } from './workflow/features'
 include { TRAIN } from './workflow/train'
 include { DOWNLOAD } from './workflow/download'
 include { TESTS } from './workflow/tests'
+include { COLLECT } from './workflow/collect'
 
 workflow {
-    TESTS(params.datadir)
 	if(params.download == true) {
 		DOWNLOAD(params.datadir)
 		METADATA(params.k, DOWNLOAD.out)
 	} else {
 		METADATA(params.k, params.datadir)
 	}
-	FEATURES(METADATA.out, ksize) 
-	TRAIN(params.k, FEATURES.out, params.model)
+	nums = channel.from(29,31)
+	COLLECT(METADATA.out, nums)
+	COLLECT.out.done.view()
 }
 
 workflow.onComplete {

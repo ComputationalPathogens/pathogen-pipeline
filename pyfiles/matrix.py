@@ -2,7 +2,6 @@ import itertools
 import pandas as pd
 from Bio import Seq, SeqIO
 import numpy as np
-from numpy import save
 from concurrent.futures import ProcessPoolExecutor
 
 def get_file_names(filepth):
@@ -37,7 +36,7 @@ def get_kmer_counts(filename, num_cols, col_index, datadir):
 
     """
 
-    genome_row = num_cols*[0]
+    genome_row = np.zeros((num_cols), dtype=np.dtype('b'))
     append = datadir + filename
     #Same method used in Computational-pathogens/acheron
     with open(append) as f:
@@ -51,7 +50,6 @@ def get_kmer_counts(filename, num_cols, col_index, datadir):
                 print(filename)
             index = col_index[seq]
             genome_row[index] = kmercount
-
 
     return genome_row
 
@@ -77,8 +75,6 @@ def build_matrix(datadir, filename = '/processed_data/cleanwcounts.csv'):
     files_path = datadir + filename
     i = 0
     files = get_file_names(files_path)
-
-    #Same method used in Computational-pathogens/acheron
     for seq in itertools.product(chars, repeat=11):
         dna = "".join(seq)
         rev = Seq.reverse_complement(dna)
@@ -87,20 +83,22 @@ def build_matrix(datadir, filename = '/processed_data/cleanwcounts.csv'):
         if not dna in cols:
             cols[dna] = i
             i += 1
-
+            
     x = np.asarray(files)
     numcols = i
     numrows = len(x)
-    kmer_matrix = np.zeros((numrows,numcols), dtype=np.ubyte)
+    kmer_matrix = np.zeros((numrows,numcols),dtype=np.dtype('b'))
     rowindex = 0
     with ProcessPoolExecutor(max_workers=None) as ppe:
         for row in ppe.map(get_kmer_counts, files, itertools.repeat(numcols), itertools.repeat(cols), itertools.repeat(datadir)):
             rows[rowindex] = rowindex
+            print(rowindex, " done")
             kmer_matrix[rowindex,:] = row
             rowindex += 1
-
-    saves = datadir + '/processed_data/features.npy'
-    save(saves, kmer_matrix)
+    
+    matrixdf = pd.DataFrame(kmer_matrix, columns=cols.keys())
+    saves = datadir + '/processed_data/features.pkl'
+    matrixdf.to_pickle(saves)
     return datadir
 
 
