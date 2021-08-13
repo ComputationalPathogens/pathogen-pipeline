@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 from matplotlib.patches import Patch
 
 def create(datadir):
-    colnames=['id','assembly','genus','species','seqfile','cntfile']
+    colnames=['id','assembly','genus','species','seqfile','cntfile', 'meta']
     data = pd.read_pickle(datadir+'/processed_data/features.pkl')
     labels = pd.read_csv(datadir+'/processed_data/clean.csv', names=colnames)
     labels = labels.species.tolist()
