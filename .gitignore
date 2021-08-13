@@ -1,0 +1,10 @@
+*.log*
+*.png
+*.sif
+*-merfreq
+*.model
+*summary.csv
+*.pyc
+processed_data/
+*.npy
+!tests/test_data/processed_data/

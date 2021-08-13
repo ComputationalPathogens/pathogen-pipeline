@@ -1,8 +1,6 @@
 import pytest
 import os
-import sys
 import pandas as pd
-import numpy as np
 datadir = os.path.abspath(os.path.dirname(__file__)) + '/test_data'
 from pyfiles import trainmodel as tm
 
@@ -14,12 +12,12 @@ def test_modeleval():
     assert acc == 0.8
     
 def test_loaddata():
-    comppth = datadir + '/processed_data/featurescomp.npy'
-    data, labels_enc, label_classes = tm.load_data(datadir, filenamenp = '/processed_data/featurescomp.npy', filenamecsv = '/processed_data/cleanwcountscomp.csv')
+    comppth = datadir + '/processed_data/featurescomp.pkl'
+    data, labels_enc, label_classes = tm.load_data(datadir, filenamenp = '/processed_data/featurescomp.pkl', filenamecsv = '/processed_data/cleanwcountscomp.csv')
     
-    comp = np.load(comppth)
-    check = data == comp
-    assert check.all()
+    comp = pd.read_pickle(comppth)
+    check = data.equals(comp)
+    assert check
     
     enccheck = [0,1,1,0,0]
     check = labels_enc == enccheck

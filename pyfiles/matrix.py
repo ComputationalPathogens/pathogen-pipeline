@@ -92,7 +92,6 @@ def build_matrix(datadir, filename = '/processed_data/cleanwcounts.csv'):
     with ProcessPoolExecutor(max_workers=None) as ppe:
         for row in ppe.map(get_kmer_counts, files, itertools.repeat(numcols), itertools.repeat(cols), itertools.repeat(datadir)):
             rows[rowindex] = rowindex
-            print(rowindex, " done")
             kmer_matrix[rowindex,:] = row
             rowindex += 1
     
