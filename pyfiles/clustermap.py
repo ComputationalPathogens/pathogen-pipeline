@@ -21,9 +21,13 @@ def create(datadir):
     
     sel = SelectKBest(f_classif,k=50000)
     kbestdata = sel.fit_transform(data,labels)
-    snsplot = sns.scattermap(kbestdata, row_colors=rowclrs)
+    kbestmask = sel.get_support()
+    kbestlabels = data.columns[kbestmask]
+    kbestdf = pd.DataFrame(kbestdata, columns=kbestlabels)
+    kbestdf.index = labels
+    snsplot = sns.clustermap(kbestdf, row_colors=rowclrs, vmin = 0, vmax = 100)
     handles = [Patch(facecolor=lut[name]) for name in lut]
     plt.legend(handles, lut, title='Species',
                bbox_to_anchor=(1, 1), bbox_transform=plt.gcf().transFigure, loc='upper right')
     
-    snsplot.savefig("ClusterMap.png")
+    snsplot.savefig(datadir+"/processed_data/ClusterMap.png")

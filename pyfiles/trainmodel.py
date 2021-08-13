@@ -58,7 +58,7 @@ def load_data(dataloc, filenamenp = '/processed_data/features.pkl', filenamecsv 
     labelpth = dataloc + filenamecsv
     #data = np.load(datapth, allow_pickle=True)
     data = pd.read_pickle(datapth)
-    colnames = ['id', 'assembly', 'genus', 'species', 'seqfile', 'cntfile']
+    colnames = ['id', 'assembly', 'genus', 'species', 'seqfile', 'cntfile', 'meta']
     labels = pd.read_csv(labelpth, names=colnames)
     labels = labels.species.tolist()
     labels = np.asarray(labels)

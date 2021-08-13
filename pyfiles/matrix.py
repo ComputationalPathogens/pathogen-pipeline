@@ -16,7 +16,7 @@ def get_file_names(filepth):
 
     """
 
-    colnames = ['id', 'assembly', 'genus', 'species', 'seqfile', 'cntfile']
+    colnames = ['id', 'assembly', 'genus', 'species', 'seqfile', 'cntfile', 'meta']
     data = pd.read_csv(filepth, names=colnames)
     files = data.cntfile.tolist()
     return files

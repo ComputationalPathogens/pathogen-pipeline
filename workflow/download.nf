@@ -10,6 +10,6 @@ process DOWNLOAD {
 
 	script:
 	"""
-	ncbi-genome-download --formats fasta,assembly-report  --genera "$genera" --parallel 4 -o "$datadir"
+	ncbi-genome-download --formats fasta,assembly-report  --genera "$genera" bacteria --parallel 4 -o "$datadir"
 	"""
 }

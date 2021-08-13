@@ -28,12 +28,15 @@ def build_metadata(datadir, filename = '/processed_data/metadata.csv'):
     f = open(filepth, 'w', newline='')
     writer = csv.writer(f)
     id = -1
+    
+    meta = re.compile("Date|Submitter|Assembly method|Genome coverage|Sequencing technology")
     #change over to use pandas write_csv
     for subdir, dirs, files in os.walk(datapth):
         if re.search("mers", str(subdir)):
             continue
         dirs.sort()
         files.sort()
+        metadict = {}
         pth, assembly, organism, genus, species, cnt = 'empty', 'empty', 'empty', 'empty', 'empty', 'empty'
         for file in files:
             ext = os.path.splitext(file)[-1].lower()
@@ -50,7 +53,6 @@ def build_metadata(datadir, filename = '/processed_data/metadata.csv'):
                 cmd = 'gunzip ' + fastapth
                 os.system(cmd)
             if ext == ".txt":
-                #works if all assembly reports follow same format
                 fp = subdir + '/' + file
                 with open(fp, 'r') as f:
                     lines = f.readlines()
@@ -63,8 +65,12 @@ def build_metadata(datadir, filename = '/processed_data/metadata.csv'):
                 species = species[1]
                 if species == 'sp.':
                     species = "unknown"
+                for l in lines[2:]:
+                    if meta.search(l):
+                        metadict[str(meta.search(l)[0])] = str(re.split(': +', str(meta.split(l)[1]))[1])[:-1]
+                        
         if id > -1:
-            writer.writerow([id, assembly, genus, species, pth, cnt])
+            writer.writerow([id, assembly, genus, species, pth, cnt, metadict])
         id += 1
 
     return datadir
@@ -89,7 +95,7 @@ def clean_outliers(k, datadir, filename = '/processed_data/metadata.csv'):
 
     """
     k = int(k)
-    colnames = ['id', 'assembly', 'genus', 'species', 'seqfile', 'cntfile']
+    colnames = ['id', 'assembly', 'genus', 'species', 'seqfile', 'cntfile', 'meta']
     csvpth = datadir + filename
     data2 = pd.read_csv(csvpth, names=colnames)
     species = data2.species.tolist()

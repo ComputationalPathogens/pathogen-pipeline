@@ -1,6 +1,7 @@
 #!/usr/bin/env nextflow
 params.download = true
 params.k = 5
+params.ksize = 11
 params.datadir = "$baseDir"
 params.genera = "Bacillus anthracis"
 
@@ -17,7 +18,7 @@ workflow {
 	} else {
 		METADATA(params.k, params.datadir)
 	}
-	FEATURES(METADATA.out, ksize)
+	FEATURES(METADATA.out, params.ksize)
     SCATTERMAP(FEATURES.out)
 }
 

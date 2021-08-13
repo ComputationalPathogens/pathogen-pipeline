@@ -19,7 +19,7 @@ def count_kmer(rootdir, ksize = 11, filename = '/processed_data/clean.csv'):
     """
     #Could potentially be done with multiprocessing instead although this doesnt take much time anyway
     filepath = rootdir + filename
-    colnames = ['id', 'assembly', 'genus', 'species', 'seqfile', 'cntfile']
+    colnames = ['id', 'assembly', 'genus', 'species', 'seqfile', 'cntfile', 'meta']
     dumpname = 'mer_counts_dumps.fa'
 
     data = pd.read_csv(filepath, names=colnames)

@@ -1,10 +1,10 @@
 0,"ASM001v1
-",Brucella,testone,/refseq/bacteria/TEST_001/TEST_001.fna,/refseq/bacteria/TEST_001/11-mers/mer_counts_dumps.fa
+",Brucella,testone,/refseq/bacteria/TEST_001/TEST_001.fna,/refseq/bacteria/TEST_001/11-mers/mer_counts_dumps.fa,{}
 1,"ASM002v1
-",Brucella,testtwo,/refseq/bacteria/TEST_002/TEST_002.fna,/refseq/bacteria/TEST_002/11-mers/mer_counts_dumps.fa
+",Brucella,testtwo,/refseq/bacteria/TEST_002/TEST_002.fna,/refseq/bacteria/TEST_002/11-mers/mer_counts_dumps.fa,{}
 2,"ASM003v1
-",Brucella,testtwo,/refseq/bacteria/TEST_003/TEST_003.fna,/refseq/bacteria/TEST_003/11-mers/mer_counts_dumps.fa
+",Brucella,testtwo,/refseq/bacteria/TEST_003/TEST_003.fna,/refseq/bacteria/TEST_003/11-mers/mer_counts_dumps.fa,{}
 4,"ASM005v1
-",Brucella,testone,/refseq/bacteria/TEST_005/TEST_005.fna,/refseq/bacteria/TEST_005/11-mers/mer_counts_dumps.fa
+",Brucella,testone,/refseq/bacteria/TEST_005/TEST_005.fna,/refseq/bacteria/TEST_005/11-mers/mer_counts_dumps.fa,{}
 5,"ASM006v1
-",Brucella,testone,/refseq/bacteria/TEST_006/TEST_006.fna,/refseq/bacteria/TEST_006/11-mers/mer_counts_dumps.fa
+",Brucella,testone,/refseq/bacteria/TEST_006/TEST_006.fna,/refseq/bacteria/TEST_006/11-mers/mer_counts_dumps.fa,{}
