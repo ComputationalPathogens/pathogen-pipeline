@@ -1,5 +1,5 @@
 #!/usr/bin/env nextflow
-
+params.genera = "Bacillus anthracis"
 params.download = true
 params.model = "xgb"
 params.k = 5
@@ -16,7 +16,7 @@ include { TESTS } from './workflow/tests'
 workflow {
     TESTS(params.datadir)
 	if(params.download == true) {
-		DOWNLOAD(params.datadir)
+		DOWNLOAD(params.datadir, params.genera)
 		METADATA(params.k, DOWNLOAD.out)
 	} else {
 		METADATA(params.k, params.datadir)
