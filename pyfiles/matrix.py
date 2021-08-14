@@ -36,7 +36,7 @@ def get_kmer_counts(filename, num_cols, col_index, datadir):
 
     """
 
-    genome_row = np.zeros((num_cols), dtype=np.dtype('b'))
+    genome_row = np.zeros((num_cols), dtype=np.dtype('uint32'))
     append = datadir + filename
     #Same method used in Computational-pathogens/acheron
     with open(append) as f:
@@ -87,7 +87,7 @@ def build_matrix(datadir, filename = '/processed_data/cleanwcounts.csv'):
     x = np.asarray(files)
     numcols = i
     numrows = len(x)
-    kmer_matrix = np.zeros((numrows,numcols),dtype=np.dtype('b'))
+    kmer_matrix = np.zeros((numrows,numcols),dtype=np.dtype('uint32'))
     rowindex = 0
     with ProcessPoolExecutor(max_workers=None) as ppe:
         for row in ppe.map(get_kmer_counts, files, itertools.repeat(numcols), itertools.repeat(cols), itertools.repeat(datadir)):
